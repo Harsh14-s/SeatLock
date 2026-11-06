@@ -169,34 +169,42 @@ SeatLock/
 
 ## 🚀 Quickstart Guide
 
-### 1. Clone & Set Up Virtual Environment
+### Option A: Run the Entire Stack in One Command (Docker)
+No local Python or database installation needed. Clones and runs the full stack (API, PostgreSQL 16, Redis, and auto-seeding):
+
 ```bash
 git clone https://github.com/<your-username>/SeatLock.git
 cd SeatLock
 
+# Build and start all services in one command
+docker compose up --build
+```
+Interactive Swagger API documentation will be immediately live at: **`http://localhost:8000/docs`**
+
+---
+
+### Option B: Local Python Development
+```bash
+git clone https://github.com/<your-username>/SeatLock.git
+cd SeatLock
+
+# 1. Create and activate virtual environment
 python -m venv .venv
 source .venv/bin/activate       # On Linux/macOS
 .\.venv\Scripts\activate        # On Windows
 
+# 2. Install dependencies
 pip install -r requirements.txt
-```
 
-### 2. Start PostgreSQL & Redis
-Using Docker Compose:
-```bash
-docker compose up -d
-```
+# 3. Start PostgreSQL & Redis services via Docker
+docker compose up -d postgres redis
 
-### 3. Seed Database & Start Server
-```bash
-# Seed 100 available seats
+# 4. Seed 100 test seats and start server
 python -m scripts.seed_data
-
-# Start FastAPI server
 uvicorn app.main:app --host 127.0.0.1 --port 8000 --reload
 ```
+API Documentation live at: **`http://127.0.0.1:8000/docs`**
 
-Interactive API documentation will be live at: **`http://127.0.0.1:8000/docs`**
 
 ---
 
